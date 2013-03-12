@@ -8,8 +8,9 @@
 #
 
 # Chef repo
-default['ow_webserver']['secret_databag_name'] 		= "secrets"
-default['ow_webserver']['secret_databag_item_name'] = "ow_webserver"
+default['ow_webserver']['secret_databag_name'] 			= "secrets"
+default['ow_webserver']['secret_databag_item_name'] 	= "ow_webserver"
+default['ow_webserver']['postgres_databag_item_name'] 	= "postgres"
 
 # SSL
 default['ow_webserver']['ssl_databag_name'] 		= "ssl"

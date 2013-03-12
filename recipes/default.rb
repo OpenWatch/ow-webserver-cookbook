@@ -34,3 +34,8 @@ file node['ow_webserver']['ssl_dir'] + node['ow_webserver']['ssl_key'] do
   mode 0600
   action :create
 end
+
+# Load encrypted data bag postgres user password
+# into attributes for use by following recipes
+psql_secrets = Chef::EncryptedDataBagItem.load(node['ow_webserver']['secret_databag_name'] , node['ow_webserver']['postgres_databag_item_name'] )
+node['postgresql']['password']['postgres'] = psql_secrets['user_password']
