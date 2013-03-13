@@ -7,6 +7,16 @@
 # All rights reserved - Do Not Redistribute
 #
 
+# Install base apps
+
+package "htop" do
+  action :install
+end
+
+package "vim" do
+  action :install
+end
+
 # Make SSL cert/key directory
 directory node['ow_webserver']['ssl_dir'] do
   owner node['nginx']['user']
@@ -38,4 +48,4 @@ end
 # Load encrypted data bag postgres user password
 # into attributes for use by following recipes
 psql_secrets = Chef::EncryptedDataBagItem.load(node['ow_webserver']['secret_databag_name'] , node['ow_webserver']['postgres_databag_item_name'] )
-node.default['postgresql']['password']['postgres'] = psql_secrets['user_password']
+node.override['postgresql']['password']['postgres'] = psql_secrets['user_password']
