@@ -1,6 +1,7 @@
 # Must be run after postgresql has created postgres user
 
-# Install boto
+#Install python, pip, virtualenv
+include_recipe "python"
 
 secrets = Chef::EncryptedDataBagItem.load(node['ow_webserver']['secret_databag_name'], node['ow_webserver']['secret_databag_item_name'])
 
@@ -42,6 +43,7 @@ template backup_module_root + 'backup_postgres.py' do
     })
 end
 
+# Install boto for S3 interfacing
 python_pip "boto" do
 	action :install
 end
