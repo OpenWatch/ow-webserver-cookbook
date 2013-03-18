@@ -9,3 +9,5 @@ version          '0.1.0'
 recipe "ow_webserver", "readies openwatch.net SSL cert and key for nginx"
 
 depends "nginx"
+depends "postgresql"
+depends "python"

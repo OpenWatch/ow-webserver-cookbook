@@ -1,0 +1,45 @@
+
+# Backs up database, compresses, encrypts
+# and transfers to specified Amazon bucket
+
+# Requirements:
+# python: boto
+# apt:  gzip, gpg, pg_dump, local postgres server
+import os
+from datetime import datetime
+
+from boto.s3.connection import S3Connection
+from boto.s3.key import Key
+
+AWS_BUCKET = '<%= @aws_bucket %>'
+AWS_ACCESS_KEY = '<%= @aws_access_key %>'
+AWS_SECRET_KEY = '<%= @aws_secret %>'
+POSTGRES_ROLE = '<%= @postgres_role %>'
+GPG_KEY = '<%= @gpg_key_name %>'
+GPG_EXT = '.gpg'
+
+PG_DUMP = 'pg_dump'
+
+
+def backup(database_name, local_backup_path):
+    # pg_dump and compress
+    result = os.system(PG_DUMP + ' -U ' + POSTGRES_ROLE + ' -h localhost ' + database_name + ' | gzip > ' + local_backup_path)
+    if result != 0:
+        return
+    # encrypt pg_dump
+    result = os.system('gpg --output ' + local_backup_path + GPG_EXT + ' --encrypt --recipient ' + GPG_KEY + ' ' + local_backup_path)
+    if result != 0:
+        return
+    os.remove(local_backup_path)  # Delete unencrypted pg_dump
+    # file xfer to S3
+    conn = S3Connection(AWS_ACCESS_KEY, AWS_SECRET_KEY)
+    bucket = conn.get_bucket(AWS_BUCKET)
+    k = Key(bucket)
+    k.key = date_str + GPG_EXT
+    k.set_contents_from_filename(local_backup_path + GPG_EXT)
+
+<% @databases.each do |database| %>
+date_str = datetime.now().strftime('%Y.%m.%d.%H.%M.%S')
+local_backup_path = os.path.join(os.path.sep, '<%= @backup_path %>', '<%= database %>' + '_' + date_str)
+backup('<%= database %>', local_backup_path)
+<% end %>

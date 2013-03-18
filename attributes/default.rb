@@ -12,6 +12,15 @@ default['ow_webserver']['secret_databag_name'] 			= "secrets"
 default['ow_webserver']['secret_databag_item_name'] 	= "ow_webserver"
 default['ow_webserver']['postgres_databag_item_name'] 	= "postgres"
 
+# Database backups
+default['ow_webserver']['aws_backup_bucket']			= "openwatch-backups"
+default['ow_webserver']['postgres_backup_databases']	= []
+default['ow_webserver']['postgres_role']				= "postgres"
+default['ow_webserver']['gpg_key']						= "contact@openwatch.net"
+default['ow_webserver']['postgres_backup_root']			= "/var/db_backups/"
+default['ow_webserver']['postgres_backup_module_root']	= "/etc/db_backups/"
+default['ow_webserver']['postgres_backup_module_name']  = "backup_postgres.py"
+
 # SSL
 default['ow_webserver']['ssl_databag_name'] 		= "ssl"
 default['ow_webserver']['ssl_databag_item_name'] 	= "ssl"
