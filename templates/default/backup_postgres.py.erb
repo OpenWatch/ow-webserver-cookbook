@@ -26,7 +26,7 @@ os.environ['PGPASSWORD'] = '<%= @postgres_pw %>'
 
 def backup(database_name, local_backup_path):
     # pg_dump and compress
-    result = os.system(PG_DUMP + ' -U ' + POSTGRES_ROLE + ' -h localhost ' + database_name + ' | xz > ' + local_backup_path)
+    result = os.system(PG_DUMP + ' -Fc -U ' + POSTGRES_ROLE + ' -h localhost ' + database_name + ' | xz > ' + local_backup_path)
     if result != 0:
         return
     # encrypt pg_dump
@@ -47,5 +47,7 @@ local_backup_path = os.path.join(os.path.sep, '<%= @backup_path %>', '<%= databa
 backup('<%= database %>', local_backup_path)
 <% end %>
 
+# To restore a backup:
+# pg_restore -d db_name ./db_dump
 
 os.environ['PGPASSWORD'] = ''
