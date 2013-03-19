@@ -49,3 +49,4 @@ end
 # into attributes for use by following recipes
 psql_secrets = Chef::EncryptedDataBagItem.load(node['ow_webserver']['secret_databag_name'] , node['ow_webserver']['postgres_databag_item_name'] )
 node.set['postgresql']['password']['postgres'] = psql_secrets['user_password']
+node.save

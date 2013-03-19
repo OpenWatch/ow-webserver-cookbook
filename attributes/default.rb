@@ -20,6 +20,8 @@ default['ow_webserver']['gpg_key']						= "contact@openwatch.net"
 default['ow_webserver']['postgres_backup_root']			= "/var/db_backups/"
 default['ow_webserver']['postgres_backup_module_root']	= "/etc/db_backups/"
 default['ow_webserver']['postgres_backup_module_name']  = "backup_postgres.py"
+default['ow_webserver']['backup_hour']  				= "4"
+default['ow_webserver']['backup_minute']  				= "19"
 
 # SSL
 default['ow_webserver']['ssl_databag_name'] 		= "ssl"

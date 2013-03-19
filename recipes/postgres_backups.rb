@@ -38,6 +38,7 @@ template backup_module_root + 'backup_postgres.py' do
     :aws_secret => secrets['aws_secret'],
     :postgres_role => node['ow_webserver']['postgres_role'],
     :gpg_key_name => node['ow_webserver']['gpg_key'],
+    :postgres_pw => node['postgresql']['password']['postgres'],
     :backup_path => node['ow_webserver']['postgres_backup_root'],
     :databases => node['ow_webserver']['postgres_backup_databases']
     })
@@ -50,8 +51,7 @@ end
 
 # Add to cron
 cron "postgres_backups" do
-  hour "4"
-  minute "19"
-  user 'postgres'
+  hour node['ow_webserver']['backup_hour']
+  minute node['ow_webserver']['backup_minute']
   command 'python ' + backup_module_root + backup_module_script
 end
