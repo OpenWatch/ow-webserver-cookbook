@@ -38,7 +38,7 @@ def backup(database_name, local_backup_path):
     conn = S3Connection(AWS_ACCESS_KEY, AWS_SECRET_KEY)
     bucket = conn.get_bucket(AWS_BUCKET)
     k = Key(bucket)
-    k.key = date_str + XZ_EXT + GPG_EXT
+    k.key = database_name + '_'+ date_str + XZ_EXT + GPG_EXT
     k.set_contents_from_filename(local_backup_path + GPG_EXT)
 
 <% @databases.each do |database| %>
