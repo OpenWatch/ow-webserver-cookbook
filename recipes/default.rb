@@ -10,8 +10,8 @@
 # Install base apps
 packages = node['ow_webserver']['packages']
 
-packages.each do |package|
-  package package
+packages.each do |app|
+  package app
   action :install
 end
 
