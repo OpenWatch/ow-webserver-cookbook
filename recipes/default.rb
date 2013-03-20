@@ -8,12 +8,10 @@
 #
 
 # Install base apps
+packages = node['ow_webserver']['packages']
 
-package "htop" do
-  action :install
-end
-
-package "vim" do
+packages.each do |package|
+  package package
   action :install
 end
 

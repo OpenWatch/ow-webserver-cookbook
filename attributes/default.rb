@@ -29,3 +29,6 @@ default['ow_webserver']['ssl_databag_item_name'] 	= "ssl"
 default['ow_webserver']['ssl_dir']					= "/srv/ssl/"
 default['ow_webserver']['ssl_cert']     			= "star_openwatch_net.crt"
 default['ow_webserver']['ssl_key']     				= "star_openwatch_net.key"
+
+# Default packages
+default['ow_webserver']['packages'] 				= ["htop", "vim"]
