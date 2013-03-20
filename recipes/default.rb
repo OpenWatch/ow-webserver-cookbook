@@ -12,7 +12,6 @@ packages = node['ow_webserver']['packages']
 
 packages.each do |app|
   package app
-  action :install
 end
 
 # Make SSL cert/key directory
