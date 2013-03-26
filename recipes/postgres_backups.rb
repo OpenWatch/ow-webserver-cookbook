@@ -26,6 +26,7 @@ directory node['ow_webserver']['postgres_backup_root'] do
   action :create
 end
 
+node_name = Chef::Config[:node_name]
 # Make backup module
 template backup_module_root + 'backup_postgres.py' do
     source 'backup_postgres.py.erb'
@@ -38,6 +39,7 @@ template backup_module_root + 'backup_postgres.py' do
     :aws_secret => secrets['aws_secret'],
     :postgres_role => node['ow_webserver']['postgres_role'],
     :gpg_key_name => node['ow_webserver']['gpg_key'],
+    :node_name => node_name,
     :postgres_pw => node['postgresql']['password']['postgres'],
     :backup_path => node['ow_webserver']['postgres_backup_root'],
     :databases => node['ow_webserver']['postgres_backup_databases']
