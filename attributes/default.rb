@@ -12,6 +12,12 @@ default['ow_webserver']['secret_databag_name'] 			= "secrets"
 default['ow_webserver']['secret_databag_item_name'] 	= "ow_webserver"
 default['ow_webserver']['postgres_databag_item_name'] 	= "postgres"
 
+# Firewall
+
+default['ow_webserver']['open_all_ports']				= []  #Open to tcp and udp
+default['ow_webserver']['open_tcp_ports']				= [22, 80, 443]
+default['ow_webserver']['open_udp_ports']				= []
+
 # Database backups
 default['ow_webserver']['aws_backup_bucket']			= "openwatch-backups"
 default['ow_webserver']['postgres_backup_databases']	= []

@@ -47,3 +47,34 @@ end
 psql_secrets = Chef::EncryptedDataBagItem.load(node['ow_webserver']['secret_databag_name'] , node['ow_webserver']['postgres_databag_item_name'] )
 node.set['postgresql']['password']['postgres'] = psql_secrets['user_password']
 node.save
+
+# Apply firewall rules
+open_all_ports = node['ow_webserver']['open_all_ports']
+if !open_all_ports.empty?
+  firewall_rule "open_tcp_and_udp_ports" do
+    ports open_all_ports
+    action :allow
+  end
+end
+
+open_tcp_ports = node['ow_webserver']['open_tcp_ports']
+if !open_tcp_ports.empty?
+  firewall_rule "open_tcp_ports" do
+    ports open_tcp_ports
+    protocol :tcp
+    action :allow
+  end
+end
+
+open_udp_ports = node['ow_webserver']['open_udp_ports']
+if !open_udp_ports.empty?
+  firewall_rule "open_udp_ports" do
+    ports open_udp_ports
+    protocol :udp
+    action :allow
+  end
+end
+
+firewall "ufw" do
+  action :enable
+end
