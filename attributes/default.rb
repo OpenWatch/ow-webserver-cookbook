@@ -10,7 +10,6 @@
 # Chef repo
 default['ow_webserver']['secret_databag_name'] 			= "secrets"
 default['ow_webserver']['secret_databag_item_name'] 	= "ow_webserver"
-default['ow_webserver']['postgres_databag_item_name'] 	= "postgres"
 
 # Firewall
 
@@ -37,4 +36,4 @@ default['ow_webserver']['ssl_cert']     			= "star_openwatch_net.crt"
 default['ow_webserver']['ssl_key']     				= "star_openwatch_net.key"
 
 # Default packages
-default['ow_webserver']['packages'] 				= ["htop", "vim"]
+default['ow_webserver']['packages'] 				= ["htop", "vim", "ufw"]
